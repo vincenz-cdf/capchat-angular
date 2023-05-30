@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { AppServiceService } from './services/app-service.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,22 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   title = 'capchat.frontend';
 
-  constructor(private http: HttpClient) { }
+  constructor(private service: AppServiceService) {
+
+  }
+
+  ngOnInit() {
+    //Rien faire
+  }
 
   getData() {
-    return this.http.get('/api/data');
+    this.service.getData().then(data => {
+      console.log(data)
+    }).catch(error => {
+      console.error(error);
+    });
   }
+
+
+
 }
