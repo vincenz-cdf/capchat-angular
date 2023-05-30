@@ -1,0 +1,47 @@
+<div class="b-example-divider"></div>
+
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+     id="modalChoice">
+</div>
+
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+     id="modalTour">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-body p-5">
+                <h4 id="hint" class="fw-bold mb-0">
+                    {{ hint }}
+                </h4>
+
+                <div id="imageContainer" style="display: flex; flex-wrap: wrap;">
+                    <div *ngFor="let image of images" (click)="imageClickHandler(image)" style="flex: 1 1 25%; padding: 10px;" [ngClass]="{'selected': image.selected}">
+                        <img src="http://localhost:3000{{image.path}}" alt="Image ID {{image.id}}" style="width: 100%; height: auto;"
+                             [attr.data-id]="image.id">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center" style="margin-top: 55px;">
+                            <div class="progress w-75">
+                                <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                                     [style.width]="getProgressBarWidth() + '%'">
+                                </div>
+                            </div>
+                            <div id="timer" class="ms-3">{{timeLeft}}s</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" id="confirmButton" class="btn btn-lg btn-primary mt-5 float-end"
+                                (click)="confirmHandler()" data-bs-dismiss="modal">Vérifier
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+     id="modalChoice">
+</div>
+<div class="b-example-divider"></div>

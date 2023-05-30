@@ -10,7 +10,15 @@ export class AppServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getData(): Promise<any> {
-    return this.http.get(this.api + 'api/data').toPromise();
+  initializeCapchat(): Promise<any> {
+    return this.http.get(this.api + 'capchat').toPromise();
+  }
+
+  checkSelectedCapchat(id: any): Promise<any> {
+    return this.http.post(this.api + 'check', id).toPromise();
+  }
+
+  reInitializeCapchat(): Promise<any> {
+    return this.http.post(this.api + 'newSet', {}).toPromise();
   }
 }

@@ -17,14 +17,6 @@ export class AppComponent {
     //Rien faire
   }
 
-  getData() {
-    this.service.getData().then(data => {
-      console.log(data)
-    }).catch(error => {
-      console.error(error);
-    });
-  }
-
 
 
 }
