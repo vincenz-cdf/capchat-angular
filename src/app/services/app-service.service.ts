@@ -15,10 +15,10 @@ export class AppServiceService {
   }
 
   checkSelectedCapchat(id: any): Promise<any> {
-    return this.http.post(this.api + 'check', id).toPromise();
+    return this.http.post(this.api + 'capchat/check', id).toPromise();
   }
 
   reInitializeCapchat(): Promise<any> {
-    return this.http.post(this.api + 'newSet', {}).toPromise();
+    return this.http.post(this.api + 'capchat/newSet', {}).toPromise();
   }
 }
