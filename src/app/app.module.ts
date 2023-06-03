@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CapchatComponent } from './capchat/capchat.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CapchatComponent
+    CapchatComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
