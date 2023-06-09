@@ -22,15 +22,16 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     }
-    console.log(credentials);
-    this.appService.signIn(credentials).then(data => {
-      if (data.auth) {
-        alert('Signin successful');
-        window.location.href = '/capchat';
-      } else {
-        alert('Signin failed: ' + data.message);
-      }
-    })
+    console.log(credentials)
+    this.appService.signIn(credentials)
+      .then(data => {
+        if (data.auth) {
+          alert('Signin successful');
+          window.location.href = '/capchat';
+        } else {
+          alert('Signin failed: ' + data.message);
+        }
+      })
       .catch(error => console.error('Error:', error));
   }
 

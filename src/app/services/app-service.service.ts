@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -11,7 +11,12 @@ export class AppServiceService {
   constructor(private http: HttpClient) { }
 
   initializeCapchat(): Promise<any> {
-    return this.http.get(this.api + 'capchat').toPromise();
+    const token = localStorage.getItem('token')!;
+    const headers = new HttpHeaders({
+      'x-access-token': token
+    });
+    
+    return this.http.post(this.api + 'capchat', { headers }).toPromise();
   }
 
   checkSelectedCapchat(id: any): Promise<any> {
@@ -24,5 +29,9 @@ export class AppServiceService {
   
   signIn(crendentials: any): Promise<any> {
     return this.http.post(this.api + 'login', crendentials).toPromise();
+  }
+
+  signUp(crendentials: any): Promise<any> {
+    return this.http.post(this.api + 'register', crendentials).toPromise();
   }
 }
