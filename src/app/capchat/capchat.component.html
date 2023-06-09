@@ -13,7 +13,7 @@
                 </h4>
 
                 <div id="imageContainer" style="display: flex; flex-wrap: wrap;">
-                    <div *ngFor="let image of images" (click)="imageClickHandler(image)" style="flex: 1 1 25%; padding: 10px;" ng-class="{'selected': image.selected}">
+                    <div *ngFor="let image of images" class="imageDisplay" (click)="imageClickHandler(image)" style="flex: 1 1 25%; padding: 10px;" [ngClass]="{'selected': image.selected}">
                         <img src="http://localhost:3000{{image.path}}" alt="Image ID {{image.id}}" style="width: 100%; height: auto;"
                              [attr.data-id]="image.id">
                     </div>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-6">
                         <button type="button" id="confirmButton" class="btn btn-lg btn-primary mt-5 float-end"
-                                (click)="confirmHandler()" data-bs-dismiss="modal">Vérifier
+                                (click)="confirmHandler()" data-bs-dismiss="modal" [disabled]="this.selectedImageId==null">Vérifier
                         </button>
                     </div>
                 </div>

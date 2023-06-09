@@ -12,7 +12,7 @@ export class CapchatComponent implements OnInit {
   timeLeft = 30;
   duration = 30;
   downloadTimer: any;
-  selectedImageId: any;
+  selectedImageId: any = null;
 
   constructor(
     private appService : AppServiceService
