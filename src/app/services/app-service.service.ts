@@ -21,4 +21,8 @@ export class AppServiceService {
   reInitializeCapchat(): Promise<any> {
     return this.http.post(this.api + 'capchat/newSet', {}).toPromise();
   }
+  
+  signIn(crendentials: any): Promise<any> {
+    return this.http.post(this.api + 'login', crendentials).toPromise();
+  }
 }
