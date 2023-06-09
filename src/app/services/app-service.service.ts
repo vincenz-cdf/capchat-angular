@@ -10,14 +10,7 @@ export class AppServiceService {
 
   constructor(private http: HttpClient) { }
 
-  initializeCapchat(): Promise<any> {
-    const token = localStorage.getItem('token')!;
-    const headers = new HttpHeaders({
-      'x-access-token': token
-    });
-    
-    return this.http.post(this.api + 'capchat', { headers }).toPromise();
-  }
+
 
   checkSelectedCapchat(id: any): Promise<any> {
     return this.http.post(this.api + 'capchat/check', id).toPromise();
@@ -27,8 +20,12 @@ export class AppServiceService {
     return this.http.post(this.api + 'capchat/newSet', {}).toPromise();
   }
   
-  signIn(crendentials: any): Promise<any> {
-    return this.http.post(this.api + 'login', crendentials).toPromise();
+  initializeCapchat(): Promise<any> {
+    return this.http.get(this.api + 'capchat', { withCredentials: true }).toPromise();
+  }
+  
+  signIn(credentials: any): Promise<any> {
+    return this.http.post(this.api + 'login', credentials, { withCredentials: true }).toPromise();
   }
 
   signUp(crendentials: any): Promise<any> {

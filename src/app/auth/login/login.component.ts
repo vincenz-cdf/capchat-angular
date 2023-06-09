@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppServiceService } from 'src/app/services/app-service.service';
 
 @Component({
@@ -11,7 +12,11 @@ export class LoginComponent implements OnInit {
   public username: any;
   public password: any;
 
-  constructor(private appService: AppServiceService) { }
+  constructor(
+    private appService: AppServiceService,
+    private router: Router
+
+    ) { }
 
   ngOnInit(): void {
 
@@ -22,17 +27,19 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     }
-    console.log(credentials)
     this.appService.signIn(credentials)
       .then(data => {
         if (data.auth) {
+          // Save token in Local Storage
+          localStorage.setItem('authToken', data.token);
           alert('Signin successful');
-          window.location.href = '/capchat';
+          this.router.navigate(['/capchat']);
         } else {
           alert('Signin failed: ' + data.message);
         }
       })
       .catch(error => console.error('Error:', error));
   }
+  
 
 }
