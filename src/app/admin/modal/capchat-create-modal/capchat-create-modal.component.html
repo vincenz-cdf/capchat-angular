@@ -1,0 +1,49 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Ajout d'un jeux d'images</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group mb-2">
+        <label for="name">Nom du jeu d'images</label>
+        <input class="form-control" id="name">
+      </div>
+      <div class="form-group mb-2">
+        <label for="theme">Theme</label>
+        <select class="form-control" id="theme">
+          <option *ngFor="let t of themes" [value]="t.id">{{t.label}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="uploadBloc">Images</label>
+        <input type="file" class="form-control-file" id="uploadBloc" hidden accept=".zip, .png, .jpg, .jpeg"
+          multiple><br>
+        <button type="button" class="btn btn-outline-secondary" (click)="downloadImages()">Importer...</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">Enregistrer</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Ajouter</button>
+
+<hr />
+
+<pre>{{ closeResult }}</pre>
+
+
+<!-- Image Preview Modal -->
+<ng-template #imagePreviewModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Uploaded Images</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let image of uploadedImages" style="flex: 1 1 25%; padding: 10px;">
+      <img [src]="image" alt="Image Preview" style="width: 25%; height: auto;">
+    </div>
+  </div>
+</ng-template>

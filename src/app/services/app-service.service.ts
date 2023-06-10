@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,10 @@ export class AppServiceService {
   private api = "http://localhost:3000/";
 
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private modal: NgbModal
+    ) { }
 
 
 
@@ -34,5 +38,9 @@ export class AppServiceService {
 
   initializeCapchatList(): Promise<any> {
     return this.http.get(this.api + 'capchats', { withCredentials: true }).toPromise();
+  }
+
+  initializeThemes(): Promise<any> {
+    return this.http.get(this.api + 'themes').toPromise();
   }
 }

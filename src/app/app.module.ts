@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './auth/register/register.component';
 import { CommonModule } from '@angular/common';
 import { CapchatListComponent } from './admin/capchat-list/capchat-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CapchatCreateModalComponent } from './admin/modal/capchat-create-modal/capchat-create-modal.component';
 
 @NgModule({
   declarations: [
@@ -17,14 +19,16 @@ import { CapchatListComponent } from './admin/capchat-list/capchat-list.componen
     CapchatComponent,
     LoginComponent,
     RegisterComponent,
-    CapchatListComponent
+    CapchatListComponent,
+    CapchatCreateModalComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
