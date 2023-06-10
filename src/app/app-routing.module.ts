@@ -5,21 +5,22 @@ import { CapchatComponent } from './capchat/capchat.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
+import { CapchatListComponent } from './admin/capchat-list/capchat-list.component';
 
 
 const routes: Routes = [
-  { path: '',
-  children: [
-      { path: '', component: LoginComponent },
-      { path: 'login', component: LoginComponent },
-  ] },
-  { path: 'register', component: RegisterComponent },
   {
-    path: 'capchat',
-    canActivate: [AuthGuard], // Use the AuthGuard here
-    component: CapchatComponent
+    path: 'login', component: LoginComponent,
   },
-
+  { 
+    path: 'register', component: RegisterComponent 
+  },
+  {
+    path: 'capchat/:id', component: CapchatComponent
+  },
+  {
+    path: '', component: CapchatListComponent
+  },
 ];
 
 @NgModule({

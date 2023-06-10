@@ -9,13 +9,15 @@ import { LoginComponent } from './auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './auth/register/register.component';
 import { CommonModule } from '@angular/common';
+import { CapchatListComponent } from './admin/capchat-list/capchat-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CapchatComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CapchatListComponent
   ],
   imports: [
     BrowserModule,

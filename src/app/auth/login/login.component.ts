@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
           // Save token in Local Storage
           localStorage.setItem('authToken', data.token);
           alert('Signin successful');
-          this.router.navigate(['/capchat']);
+          this.router.navigate(['']);
         } else {
           alert('Signin failed: ' + data.message);
         }

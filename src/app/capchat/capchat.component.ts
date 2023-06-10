@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppServiceService } from '../services/app-service.service';
+import { ActivatedRoute  } from '@angular/router';
 
 @Component({
   selector: 'app-capchat',
@@ -13,13 +14,16 @@ export class CapchatComponent implements OnInit {
   duration = 30;
   downloadTimer: any;
   selectedImageId: any = null;
+  imageSetId: any;
 
   constructor(
-    private appService : AppServiceService
+    private appService : AppServiceService,
+    private route: ActivatedRoute 
     ) {}
 
   ngOnInit() {
     this.startTimer(this.timeLeft);
+    this.imageSetId = this.route.snapshot.paramMap.get('id');
     this.loadData();
   }
 
@@ -68,7 +72,7 @@ export class CapchatComponent implements OnInit {
   }
 
   loadData() {
-    this.appService.initializeCapchat().then((data) => {
+    this.appService.initializeCapchat(this.imageSetId).then((data) => {
       this.hint = data.hint;
       this.images = data.images;
     }).catch(error => {

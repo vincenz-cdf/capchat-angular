@@ -20,8 +20,8 @@ export class AppServiceService {
     return this.http.post(this.api + 'capchat/newSet', {}).toPromise();
   }
   
-  initializeCapchat(): Promise<any> {
-    return this.http.get(this.api + 'capchat', { withCredentials: true }).toPromise();
+  initializeCapchat(id: any): Promise<any> {
+    return this.http.get(this.api + 'capchat/' + id, {}).toPromise();
   }
   
   signIn(credentials: any): Promise<any> {
@@ -30,5 +30,9 @@ export class AppServiceService {
 
   signUp(crendentials: any): Promise<any> {
     return this.http.post(this.api + 'register', crendentials).toPromise();
+  }
+
+  initializeCapchatList(): Promise<any> {
+    return this.http.get(this.api + 'capchats', { withCredentials: true }).toPromise();
   }
 }
