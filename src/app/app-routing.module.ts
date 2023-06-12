@@ -19,7 +19,9 @@ const routes: Routes = [
     path: 'capchat/:id', component: CapchatComponent
   },
   {
-    path: '', component: CapchatListComponent
+    path: '',
+    canActivate: [AuthGuard], // Use the AuthGuard here
+    component: CapchatListComponent
   },
 ];
 

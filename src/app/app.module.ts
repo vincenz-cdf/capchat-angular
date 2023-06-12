@@ -12,6 +12,12 @@ import { CommonModule } from '@angular/common';
 import { CapchatListComponent } from './admin/capchat-list/capchat-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CapchatCreateModalComponent } from './admin/modal/capchat-create-modal/capchat-create-modal.component';
+import { CookieService } from 'ngx-cookie-service';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -28,9 +34,20 @@ import { CapchatCreateModalComponent } from './admin/modal/capchat-create-modal/
     AppRoutingModule,
     FormsModule,
     CommonModule,
-    NgbModule
+    NgbModule,
   ],
-  providers: [],
+  providers: [
+    CookieService,
+    {
+      provide: JWT_OPTIONS,
+      useValue: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["http://localhost:3000"],
+        disallowedRoutes: ["http://example.com/api/auth"],
+      }
+    },
+    JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class AppServiceService {
 
   constructor(
     private http: HttpClient,
-    private modal: NgbModal
+    private cookieService: CookieService, 
+    public jwtHelper: JwtHelperService
     ) { }
 
 
@@ -43,4 +45,9 @@ export class AppServiceService {
   initializeThemes(): Promise<any> {
     return this.http.get(this.api + 'themes').toPromise();
   }
+
+  isAuthenticated(): Promise<any> {
+    return this.http.get(this.api + 'isAuthenticated', { withCredentials: true }).toPromise();
+}
+  
 }
