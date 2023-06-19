@@ -22,4 +22,7 @@ export class CapchatListComponent implements OnInit {
     })
   }
 
+  public crudModal(imageSet?: any) {
+    this.appService.openCrudModal(imageSet);
+  }
 }

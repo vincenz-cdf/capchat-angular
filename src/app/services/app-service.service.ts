@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
+import { CapchatCreateModalComponent } from '../admin/modal/capchat-create-modal/capchat-create-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class AppServiceService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService, 
-    public jwtHelper: JwtHelperService
+    public jwtHelper: JwtHelperService,
+    private modalService: NgbModal
     ) { }
 
 
@@ -46,8 +49,17 @@ export class AppServiceService {
     return this.http.get(this.api + 'themes').toPromise();
   }
 
+  openCrudModal(imageSet: any) {
+    const dlg = this.modalService.open(CapchatCreateModalComponent);
+    dlg.componentInstance.imageSet = imageSet;
+  }
+
+  createImageSet(data: any) {
+    return this.http.post(this.api + 'imageset', data).toPromise();
+  }
+
   isAuthenticated(): Promise<any> {
     return this.http.get(this.api + 'isAuthenticated', { withCredentials: true }).toPromise();
-}
-  
+  }
+
 }

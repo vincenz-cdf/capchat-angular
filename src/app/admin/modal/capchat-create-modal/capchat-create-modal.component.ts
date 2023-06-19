@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalDismissReasons, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AppServiceService } from 'src/app/services/app-service.service';
 
 @Component({
@@ -9,24 +9,37 @@ import { AppServiceService } from 'src/app/services/app-service.service';
 })
 export class CapchatCreateModalComponent implements OnInit {
 
+  @Input() public imageSet: any;
+
   closeResult = '';
   themes: any;
-  uploadedImages: any[] = [];  // To store the uploaded images
+  uploadedImages: {url: string, name: string, hint?: string}[] = [];
+
+  public creation = false;
+  public imageSetData: any;
 
   @ViewChild('imagePreviewModal') imagePreviewModal: any;  // Reference to the image preview modal
 
   constructor(
     private modalService: NgbModal,
     private appService: AppServiceService,
-    private config: NgbModalConfig
+    private config: NgbModalConfig,
+    private activeModal: NgbActiveModal
   ) {
 		config.backdrop = 'static';
 		config.keyboard = false;
   }
 
   ngOnInit(): void {
-    this.getThemes();
+    if(!this.imageSet) {
+      this.creation = true;
+    } 
 
+    this.imageSetData = {
+      "name": this.creation ? '' : this.imageSet.name,
+      "theme": this.creation ? null : this.imageSet.theme_id,
+    }
+    this.getThemes();
   }
 
   open(content: any) {
@@ -38,6 +51,10 @@ export class CapchatCreateModalComponent implements OnInit {
         this.closeResult = "Annulation création";
       },
     );
+  }
+
+  close(msg: any) {
+    this.activeModal.dismiss(msg);
   }
 
   private getDismissReason(reason: any): string {
@@ -60,19 +77,16 @@ export class CapchatCreateModalComponent implements OnInit {
   downloadImages() {
     let fileInput = <HTMLInputElement>document.getElementById('uploadBloc');
     fileInput.click();
-
+  
     if (fileInput != null) {
       fileInput.onchange = (event) => {
-        // Assuming you want to display image previews
         for (let i = 0; i < fileInput.files!.length; i++) {
           let reader = new FileReader();
           reader.onload = (e: any) => {
-            this.uploadedImages.push(e.target.result);  // Add the image to the uploadedImages array
+            this.uploadedImages.push({url: e.target.result, name: fileInput.files![i].name, hint: ''});  
           }
-          reader.readAsDataURL(fileInput.files![i]);  // Read the image file as a data URL
+          reader.readAsDataURL(fileInput.files![i]);
         }
-
-        // Open the image preview modal after a delay to allow image loading
         setTimeout(() => {
           this.modalService.open(this.imagePreviewModal, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
         }, 500);
@@ -80,6 +94,18 @@ export class CapchatCreateModalComponent implements OnInit {
     } else {
       console.log("error")
     }
+  }
+  
+  removeImage(i: any) {
+    this.uploadedImages.splice(i, 1)
+  }
+
+  getImagesAsJson() {
+    this.appService.createImageSet(this.uploadedImages)
+  }
+
+  manageImages() {
+
   }
 
 }

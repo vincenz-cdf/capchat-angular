@@ -1,36 +1,37 @@
-<ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Ajout d'un jeux d'images</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    <h4 class="modal-title" id="modal-basic-title">{{this.creation ? "Ajout d'un jeux d'images" : "Modifier un jeux d'images"}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close('Cross click')"></button>
   </div>
   <div class="modal-body">
     <form>
       <div class="form-group mb-2">
-        <label for="name">Nom du jeu d'images</label>
-        <input class="form-control" id="name">
+        <label>Nom du jeu d'images</label>
+        <input [(ngModel)]="imageSetData.name" class="form-control" [ngModelOptions]="{standalone: true}">
       </div>
       <div class="form-group mb-2">
-        <label for="theme">Theme</label>
-        <select class="form-control" id="theme">
+        <label>Theme</label>
+        <select class="form-control" [(ngModel)]="imageSetData.theme" [ngModelOptions]="{standalone: true}">
           <option *ngFor="let t of themes" [value]="t.id">{{t.label}}</option>
         </select>
       </div>
       <div class="form-group">
-        <label for="uploadBloc">Images</label>
-        <input type="file" class="form-control-file" id="uploadBloc" hidden accept=".zip, .png, .jpg, .jpeg"
+        <div *ngIf="this.creation" class="mt-2">
+          <input type="file" class="form-control-file" id="uploadBloc" hidden accept=".zip, .png, .jpg, .jpeg"
           multiple><br>
-        <button type="button" class="btn btn-outline-secondary" (click)="downloadImages()">Importer...</button>
+          <button type="button" class="btn btn-outline-secondary" (click)="downloadImages()">Importer les images</button>
+        </div>
+        <div *ngIf="!this.creation" class="mt-2">
+          <input type="file" hidden><br>
+          <button type="button" class="btn btn-outline-secondary" (click)="manageImages()">Voir images</button>
+        </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">Enregistrer</button>
+    <button type="button" class="btn btn-outline-success" (click)="close('')">Enregistrer</button>
   </div>
-</ng-template>
 
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Ajouter</button>
 
-<hr />
 
 <pre>{{ closeResult }}</pre>
 
@@ -38,12 +39,33 @@
 <!-- Image Preview Modal -->
 <ng-template #imagePreviewModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Uploaded Images</h4>
+    <h4 class="modal-title" id="modal-basic-title">Images importés</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <div *ngFor="let image of uploadedImages" style="flex: 1 1 25%; padding: 10px;">
-      <img [src]="image" alt="Image Preview" style="width: 25%; height: auto;">
+    <div *ngFor="let image of uploadedImages; let i = index" class="row">
+      <div class="col-4">
+        <img  alt="Image Preview" class="mt-1" style="width: 35%; height: auto;">
+      </div>
+      <div class="col-2 ml-n1">
+        <span>Nom</span><br>
+        <input class="form-control form-control-sm" [(ngModel)]="uploadedImages[i].name">
+      </div>
+      <div class="col-2 ml-n1">
+        <span>Question</span><br>
+        <input class="form-control form-control-sm" [(ngModel)]="uploadedImages[i].hint">
+      </div>
+      <div class="col-2">
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeImage(i)">X</button>
+      </div>
+      <div class="mb-1">
+      </div>
+      <br>
+      <hr>
     </div>
+      
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close()">Valider</button>
   </div>
 </ng-template>

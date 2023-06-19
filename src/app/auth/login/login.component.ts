@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
         if (data.auth) {
           // Save token in Local Storage
           localStorage.setItem('authToken', data.token);
-          alert('Signin successful');
           this.router.navigate(['']);
         } else {
+          //Prevoir gestion erreur
           alert('Signin failed: ' + data.message);
         }
       })
