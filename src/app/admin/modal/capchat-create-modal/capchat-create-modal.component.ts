@@ -9,7 +9,7 @@ import { AppServiceService } from 'src/app/services/app-service.service';
 })
 export class CapchatCreateModalComponent implements OnInit {
 
-  @Input() public imageSet: any;
+  @Input() public params: any;
 
   closeResult = '';
   themes: any;
@@ -31,13 +31,13 @@ export class CapchatCreateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!this.imageSet) {
+    if(!this.params.imageSet) {
       this.creation = true;
     } 
 
     this.imageSetData = {
-      "name": this.creation ? '' : this.imageSet.name,
-      "theme": this.creation ? null : this.imageSet.theme_id,
+      "name": this.creation ? '' : this.params.imageSet.name,
+      "theme": this.creation ? null : this.params.imageSet.theme_id,
     }
     this.getThemes();
   }
@@ -115,6 +115,7 @@ export class CapchatCreateModalComponent implements OnInit {
     });
     formData.append('set_name', this.imageSetData.name);
     formData.append('theme_id', this.imageSetData.theme);
+    formData.append('user_id', this.params.user.id);
     this.appService.sendImagesToServer(formData).then(response => {
       console.log(response); // handle response here
     });

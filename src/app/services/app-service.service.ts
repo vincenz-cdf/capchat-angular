@@ -47,9 +47,12 @@ export class AppServiceService {
     return this.http.get(this.api + 'themes').toPromise();
   }
 
-  openCrudModal(imageSet: any) {
+  openCrudModal(imageSet: any, user: any) {
     const dlg = this.modalService.open(CapchatCreateModalComponent);
-    dlg.componentInstance.imageSet = imageSet;
+    dlg.componentInstance.params = {
+      imageSet,
+      user
+    }
   }
 
   sendImagesToServer(data: any) {
@@ -60,4 +63,7 @@ export class AppServiceService {
     return this.http.get(this.api + 'isAuthenticated', { withCredentials: true }).toPromise();
   }
 
+  getCurrentUser(): Promise<any> {
+    return this.http.get(this.api + 'currentUser', { withCredentials: true }).toPromise();
+  }
 }

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AppServiceService } from 'src/app/services/app-service.service';
 
@@ -8,11 +9,15 @@ import { AppServiceService } from 'src/app/services/app-service.service';
 })
 export class CapchatListComponent implements OnInit {
 
+  public imageSets: any;
+  public user: any;
+
   constructor(private appService: AppServiceService) { }
 
-  public imageSets: any;
+
 
   ngOnInit(): void {
+    this.getCurrentUser();
     this.initializeCapchatList();
   }
 
@@ -22,7 +27,13 @@ export class CapchatListComponent implements OnInit {
     })
   }
 
+  public getCurrentUser() {
+    this.appService.getCurrentUser().then((data) => {
+      this.user = data;
+    })
+  }
+
   public crudModal(imageSet?: any) {
-    this.appService.openCrudModal(imageSet);
+    this.appService.openCrudModal(imageSet, this.user);
   }
 }

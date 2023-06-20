@@ -28,7 +28,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button [disabled]="this.uploadedImages.length == 0 && this.imageSetData.name == '' && this.imageSetData.theme == null" 
+    <button [disabled]="this.uploadedImages.length == 0 || this.imageSetData.name == '' || this.imageSetData.theme == null" 
     type="button" class="btn btn-outline-success" (click)="getImagesAsJson()">Enregistrer</button>
   </div>
 
@@ -62,7 +62,7 @@
       <div class="mb-1">
       </div>
       <br>
-      <hr>
+      <hr *ngIf="i+1!=uploadedImages.length">
     </div>
       
   </div>
