@@ -117,7 +117,7 @@ export class CapchatCreateModalComponent implements OnInit {
     formData.append('theme_id', this.imageSetData.theme);
     formData.append('user_id', this.params.user.id);
     this.appService.sendImagesToServer(formData).then(response => {
-      console.log(response); // handle response here
+      this.activeModal.close()
     });
   }
 

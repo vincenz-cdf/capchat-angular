@@ -34,6 +34,8 @@ export class CapchatListComponent implements OnInit {
   }
 
   public crudModal(imageSet?: any) {
-    this.appService.openCrudModal(imageSet, this.user);
+    this.appService.openCrudModal(imageSet, this.user).then(() => {
+      this.initializeCapchatList();
+    });
   }
 }

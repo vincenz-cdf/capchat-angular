@@ -14,10 +14,10 @@ export class AppServiceService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService, 
+    private cookieService: CookieService,
     public jwtHelper: JwtHelperService,
     private modalService: NgbModal
-    ) { }
+  ) { }
 
   checkSelectedCapchat(id: any): Promise<any> {
     return this.http.post(this.api + 'capchat/check', id).toPromise();
@@ -26,11 +26,11 @@ export class AppServiceService {
   reInitializeCapchat(): Promise<any> {
     return this.http.post(this.api + 'capchat/newSet', {}).toPromise();
   }
-  
+
   initializeCapchat(id: any): Promise<any> {
     return this.http.get(this.api + 'capchat/' + id, {}).toPromise();
   }
-  
+
   signIn(credentials: any): Promise<any> {
     return this.http.post(this.api + 'login', credentials, { withCredentials: true }).toPromise();
   }
@@ -47,15 +47,23 @@ export class AppServiceService {
     return this.http.get(this.api + 'themes').toPromise();
   }
 
-  openCrudModal(imageSet: any, user: any) {
-    const dlg = this.modalService.open(CapchatCreateModalComponent);
-    dlg.componentInstance.params = {
-      imageSet,
-      user
-    }
+  openCrudModal(imageSet: any, user: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const dlg = this.modalService.open(CapchatCreateModalComponent);
+      dlg.componentInstance.params = {
+        imageSet,
+        user
+      };
+      dlg.result.then((result) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+    });
   }
+  
 
-  sendImagesToServer(data: any) {
+  sendImagesToServer(data: any): Promise<any> {
     return this.http.post(this.api + 'imageset', data).toPromise();
   }
 
