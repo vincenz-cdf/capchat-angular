@@ -101,7 +101,23 @@ export class CapchatCreateModalComponent implements OnInit {
   }
 
   getImagesAsJson() {
-    this.appService.createImageSet(this.uploadedImages)
+    const formData = new FormData();
+    this.uploadedImages.forEach((image, index) => {
+      const byteCharacters = atob(image.url.split(',')[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], {type: 'image/jpeg'});
+      formData.append(`file${index}`, blob, image.name);
+      formData.append(`hint${index}`, image.hint ? image.hint : "");
+    });
+    formData.append('set_name', this.imageSetData.name);
+    formData.append('theme_id', this.imageSetData.theme);
+    this.appService.sendImagesToServer(formData).then(response => {
+      console.log(response); // handle response here
+    });
   }
 
   manageImages() {

@@ -28,7 +28,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" (click)="close('')">Enregistrer</button>
+    <button [disabled]="this.uploadedImages.length == 0 && this.imageSetData.name == '' && this.imageSetData.theme == null" 
+    type="button" class="btn btn-outline-success" (click)="getImagesAsJson()">Enregistrer</button>
   </div>
 
 
@@ -45,7 +46,7 @@
   <div class="modal-body">
     <div *ngFor="let image of uploadedImages; let i = index" class="row">
       <div class="col-4">
-        <img  alt="Image Preview" class="mt-1" style="width: 35%; height: auto;">
+        <img [src]="image.url" alt="Image Preview" class="mt-1" style="width: 35%; height: auto;">
       </div>
       <div class="col-2 ml-n1">
         <span>Nom</span><br>

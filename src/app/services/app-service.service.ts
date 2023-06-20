@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,8 +18,6 @@ export class AppServiceService {
     public jwtHelper: JwtHelperService,
     private modalService: NgbModal
     ) { }
-
-
 
   checkSelectedCapchat(id: any): Promise<any> {
     return this.http.post(this.api + 'capchat/check', id).toPromise();
@@ -54,7 +52,7 @@ export class AppServiceService {
     dlg.componentInstance.imageSet = imageSet;
   }
 
-  createImageSet(data: any) {
+  sendImagesToServer(data: any) {
     return this.http.post(this.api + 'imageset', data).toPromise();
   }
 
