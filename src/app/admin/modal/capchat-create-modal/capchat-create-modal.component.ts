@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppServiceService } from 'src/app/services/app-service.service';
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-capchat-create-modal',
@@ -63,15 +64,27 @@ export class CapchatCreateModalComponent implements OnInit {
   downloadImages() {
     let fileInput = <HTMLInputElement>document.getElementById('uploadBloc');
     fileInput.click();
-
+  
     if (fileInput != null) {
       fileInput.onchange = (event) => {
         for (let i = 0; i < fileInput.files!.length; i++) {
-          let reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.uploadedImages.push({ url: e.target.result, name: fileInput.files![i].name, hint: '' });
+          if (fileInput.files![i].name.endsWith('.zip')) {
+            JSZip.loadAsync(fileInput.files![i]).then((zip) => {
+              zip.forEach((relativePath, zipEntry) => {
+                if (zipEntry.name.endsWith('.png') || zipEntry.name.endsWith('.jpg') || zipEntry.name.endsWith('.jpeg')) {
+                  zipEntry.async('base64').then((fileData) => {
+                    this.uploadedImages.push({ url: 'data:image/png;base64,' + fileData, name: zipEntry.name, hint: '' });
+                  });
+                }
+              });
+            });
+          } else {
+            let reader = new FileReader();
+            reader.onload = (e: any) => {
+              this.uploadedImages.push({ url: e.target.result, name: fileInput.files![i].name, hint: '' });
+            }
+            reader.readAsDataURL(fileInput.files![i]);
           }
-          reader.readAsDataURL(fileInput.files![i]);
         }
         setTimeout(() => {
           this.modalService.open(this.imagePreviewModal, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
@@ -108,7 +121,9 @@ export class CapchatCreateModalComponent implements OnInit {
   }
 
   manageImages(creation: boolean) {
-
+    if(!creation) { //Modification
+      
+    }
   }
 
   disableUploadImageButton() {
