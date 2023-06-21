@@ -65,6 +65,10 @@ export class AppServiceService {
   }
   
 
+  getImagesFromServer(id: any): Promise<any> {
+    return this.http.get(this.api + 'imageset/' + id).toPromise();
+  }
+
   sendImagesToServer(data: any): Promise<any> {
     return this.http.post(this.api + 'imageset', data).toPromise();
   }

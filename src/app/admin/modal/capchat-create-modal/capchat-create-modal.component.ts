@@ -121,8 +121,10 @@ export class CapchatCreateModalComponent implements OnInit {
   }
 
   manageImages(creation: boolean) {
-    if(!creation) { //Modification
-      
+    if(!creation && this.params.imageSet) { //Modification
+      this.appService.getImagesFromServer(this.params.imageSet.id).then((data) => {
+        console.log(data);
+      });
     }
   }
 
