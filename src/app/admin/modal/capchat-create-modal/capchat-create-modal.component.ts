@@ -13,7 +13,7 @@ export class CapchatCreateModalComponent implements OnInit {
 
   closeResult = '';
   themes: any;
-  uploadedImages: {url: string, name: string, hint?: string}[] = [];
+  uploadedImages: { url: string, name: string, hint?: string }[] = [];
 
   public creation = false;
   public imageSetData: any;
@@ -23,17 +23,13 @@ export class CapchatCreateModalComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private appService: AppServiceService,
-    private config: NgbModalConfig,
     private activeModal: NgbActiveModal
-  ) {
-		config.backdrop = 'static';
-		config.keyboard = false;
-  }
+  ) { }
 
   ngOnInit(): void {
-    if(!this.params.imageSet) {
+    if (!this.params.imageSet) {
       this.creation = true;
-    } 
+    }
 
     this.imageSetData = {
       "name": this.creation ? '' : this.params.imageSet.name,
@@ -57,16 +53,6 @@ export class CapchatCreateModalComponent implements OnInit {
     this.activeModal.dismiss(msg);
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
   getThemes() {
     this.appService.initializeThemes().then((data) => {
       this.themes = data;
@@ -77,13 +63,13 @@ export class CapchatCreateModalComponent implements OnInit {
   downloadImages() {
     let fileInput = <HTMLInputElement>document.getElementById('uploadBloc');
     fileInput.click();
-  
+
     if (fileInput != null) {
       fileInput.onchange = (event) => {
         for (let i = 0; i < fileInput.files!.length; i++) {
           let reader = new FileReader();
           reader.onload = (e: any) => {
-            this.uploadedImages.push({url: e.target.result, name: fileInput.files![i].name, hint: ''});  
+            this.uploadedImages.push({ url: e.target.result, name: fileInput.files![i].name, hint: '' });
           }
           reader.readAsDataURL(fileInput.files![i]);
         }
@@ -95,7 +81,7 @@ export class CapchatCreateModalComponent implements OnInit {
       console.log("error")
     }
   }
-  
+
   removeImage(i: any) {
     this.uploadedImages.splice(i, 1)
   }
@@ -109,7 +95,7 @@ export class CapchatCreateModalComponent implements OnInit {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], {type: 'image/jpeg'});
+      const blob = new Blob([byteArray], { type: 'image/jpeg' });
       formData.append(`file${index}`, blob, image.name);
       formData.append(`hint${index}`, image.hint ? image.hint : "");
     });
@@ -121,8 +107,23 @@ export class CapchatCreateModalComponent implements OnInit {
     });
   }
 
-  manageImages() {
+  manageImages(creation: boolean) {
 
+  }
+
+  disableUploadImageButton() {
+
+    for (let i in this.uploadedImages) {
+      if (this.uploadedImages[i].hint) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  cancelUploadedImages(modal: any) {
+    this.uploadedImages = [];
+    modal.close();
   }
 
 }

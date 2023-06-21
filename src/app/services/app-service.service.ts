@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 import { CapchatCreateModalComponent } from '../admin/modal/capchat-create-modal/capchat-create-modal.component';
 
@@ -14,9 +14,9 @@ export class AppServiceService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService,
     public jwtHelper: JwtHelperService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private config: NgbModalConfig,
   ) { }
 
   checkSelectedCapchat(id: any): Promise<any> {
@@ -48,8 +48,10 @@ export class AppServiceService {
   }
 
   openCrudModal(imageSet: any, user: any): Promise<any> {
+    this.config.backdrop = 'static';
+    this.config.keyboard = false;
     return new Promise((resolve, reject) => {
-      const dlg = this.modalService.open(CapchatCreateModalComponent);
+      const dlg = this.modalService.open(CapchatCreateModalComponent, this.config);
       dlg.componentInstance.params = {
         imageSet,
         user
