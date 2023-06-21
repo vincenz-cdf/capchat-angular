@@ -7,6 +7,10 @@
                 <label for="floatingInput">Identifiant</label>
             </div>
             <div class="form-floating">
+                <input [(ngModel)]="this.email" type="email" class="form-control" id="email" placeholder="Email" required>
+                <label for="floatingInput">Email</label>
+            </div>
+            <div class="form-floating">
                 <input [(ngModel)]="this.password" type="password" class="form-control" id="password" placeholder="Mot de passe" required>
                 <label for="floatingPassword">Mot de passe</label>
             </div>

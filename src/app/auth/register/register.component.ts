@@ -9,6 +9,7 @@ import { AppServiceService } from 'src/app/services/app-service.service';
 export class RegisterComponent implements OnInit {
 
   public username: any;
+  public email: any;
   public password: any;
 
   constructor(private appService: AppServiceService) { }
@@ -19,6 +20,7 @@ export class RegisterComponent implements OnInit {
   signUp() {
     const credentials = {
       username: this.username,
+      email: this.email,
       password: this.password
     }
     this.appService.signUp(credentials)
