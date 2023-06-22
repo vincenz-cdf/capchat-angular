@@ -40,6 +40,7 @@ export class CapchatCreateModalComponent implements OnInit {
     this.imageSetData = {
       "name": this.creation ? '' : this.params.imageSet.name,
       "theme": this.creation ? null : this.params.imageSet.theme_id,
+      "destination_url": this.creation ? '' : this.params.imageSet.destination_url,
     }
     this.getThemes();
 
@@ -132,6 +133,7 @@ export class CapchatCreateModalComponent implements OnInit {
     formData.append('theme_id', this.imageSetData.theme);
     formData.append('user_id', this.params.user.id);
     formData.append('image_sets_id', this.params.imageSet ? this.params.imageSet.id : null);
+    formData.append('destination_url', this.imageSetData.destination_url);
     this.appService.sendImagesToServer(formData).then(response => {
       this.activeModal.close()
       Swal.fire({
@@ -174,6 +176,12 @@ export class CapchatCreateModalComponent implements OnInit {
   cancelUploadedImages(modal: any) {
     this.uploadedImages = [];
     modal.close();
+  }
+
+  public themeModal() {
+    this.appService.openThemeModal().then(() => {
+      this.getThemes();
+    });
   }
 
 }

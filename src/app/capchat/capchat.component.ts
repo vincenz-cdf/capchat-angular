@@ -35,11 +35,11 @@ export class CapchatComponent implements OnInit {
   
 
   confirmHandler() {
-    this.appService.checkSelectedCapchat({id: this.selectedImageId}).then((data: any) => {
+    this.appService.checkSelectedCapchat({id: this.selectedImageId, image_sets_id: this.imageSetId}).then((data: any) => {
       if (data.singular === false) {
         this.resetTimerAndImages();
-      } else if (data.redirect) {
-        window.location.href = data.redirect;
+      } else if (data.singular == true) {
+        window.location.href = data.url;
       }
     }, error => console.error('Error:', error));
   }
@@ -58,7 +58,7 @@ export class CapchatComponent implements OnInit {
 
 
   resetTimerAndImages() {
-    this.appService.reInitializeCapchat().then((result: any) => {
+    this.appService.reInitializeCapchat({"id": this.imageSetId}).then((result: any) => {
       this.images = result.images;
       this.hint = result.hint;
       if (this.duration > 5) {

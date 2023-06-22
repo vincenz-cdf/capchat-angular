@@ -1,36 +1,51 @@
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{this.creation ? "Ajout d'un jeux d'images" : "Modifier un jeux d'images"}}</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="close('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <div class="form-group mb-2">
-        <label>Nom du jeu d'images</label>
-        <input [(ngModel)]="imageSetData.name" class="form-control" [ngModelOptions]="{standalone: true}">
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">
+    {{this.creation ? "Ajout d'un jeux d'images" : "Modifier un jeux d'images"}}
+  </h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group mb-2">
+      <label>Nom du jeu d'images</label>
+      <input [(ngModel)]="imageSetData.name" class="form-control" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group mb-2">
+      <div class="row">
+        <div class="col-10">
+          <label>Theme</label>
+          <select class="form-select" [(ngModel)]="imageSetData.theme" [ngModelOptions]="{standalone: true}">
+            <option *ngFor="let t of themes" [value]="t.id">{{t.label}}</option>
+          </select>
+        </div>
+        <div class="col-2 mt-4">
+          <button type="button" class="btn btn-outline-success"><i class="fa fa-plus" (click)="themeModal()"></i></button>
+        </div>
       </div>
-      <div class="form-group mb-2">
-        <label>Theme</label>
-        <select class="form-control" [(ngModel)]="imageSetData.theme" [ngModelOptions]="{standalone: true}">
-          <option *ngFor="let t of themes" [value]="t.id">{{t.label}}</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <div *ngIf="this.creation && this.uploadedImages.length==0" class="mt-2">
-          <input type="file" class="form-control-file" id="uploadBloc" hidden accept=".zip, .png, .jpg, .jpeg"
+    </div>
+    <div class="form-group mb-2">
+      <label>Url destination</label>
+      <input [(ngModel)]="imageSetData.destination_url" class="form-control" [ngModelOptions]="{standalone: true}">
+    </div>
+    <div class="form-group">
+      <div *ngIf="this.creation && this.uploadedImages.length==0" class="mt-2">
+        <input type="file" class="form-control-file" id="uploadBloc" hidden accept=".zip, .png, .jpg, .jpeg"
           multiple><br>
-          <button type="button" class="btn btn-outline-secondary" (click)="downloadImages()">Importer les images</button>
-        </div>
-        <div *ngIf="!this.creation || this.uploadedImages.length!=0" class="mt-2">
-          <input type="file" hidden><br>
-          <button type="button" class="btn btn-outline-secondary" (click)="manageImages(this.creation)">Voir images</button>
-        </div>
+        <button type="button" class="btn btn-outline-secondary" (click)="downloadImages()">Importer les images</button>
       </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button [disabled]="this.uploadedImages.length == 0 || this.imageSetData.name == '' || this.imageSetData.theme == null" 
+      <div *ngIf="!this.creation || this.uploadedImages.length!=0" class="mt-2">
+        <input type="file" hidden><br>
+        <button type="button" class="btn btn-outline-secondary" (click)="manageImages(this.creation)">Voir
+          images</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    [disabled]="this.uploadedImages.length == 0 || this.imageSetData.name == '' || this.imageSetData.theme == null"
     type="button" class="btn btn-outline-success" (click)="getImagesAsJson()">Enregistrer</button>
-  </div>
+</div>
 
 
 
@@ -64,15 +79,15 @@
       <hr *ngIf="i+1!=uploadedImages.length">
 
     </div>
-      
+
   </div>
   <div class="modal-footer">
-    <div *ngIf="this.uploadedImages.length < 8 || disableUploadImageButton()" 
-    class="alert alert-warning mr-auto" role="alert">
+    <div *ngIf="this.uploadedImages.length < 8 || disableUploadImageButton()" class="alert alert-warning mr-auto"
+      role="alert">
       Il faut au moins 8 images et une question
     </div>
     <button type="button" class="btn btn-outline-danger" (click)="cancelUploadedImages(modal)">Annuler</button>
-    <button [disabled]="this.uploadedImages.length < 8 || disableUploadImageButton()" 
-    type="button" class="btn btn-outline-success" (click)="modal.close()">Valider</button>
+    <button [disabled]="this.uploadedImages.length < 8 || disableUploadImageButton()" type="button"
+      class="btn btn-outline-success" (click)="modal.close()">Valider</button>
   </div>
 </ng-template>

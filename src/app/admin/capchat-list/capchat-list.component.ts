@@ -38,4 +38,5 @@ export class CapchatListComponent implements OnInit {
       this.initializeCapchatList();
     });
   }
+
 }

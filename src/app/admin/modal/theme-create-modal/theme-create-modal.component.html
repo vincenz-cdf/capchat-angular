@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Ajouter un theme</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group mb-2">
+      <label>Nom du theme</label>
+      <input [(ngModel)]="themeName" class="form-control" [ngModelOptions]="{standalone: true}">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button [disabled]="themeName == '' || themeName == null" type="button" class="btn btn-outline-success"
+    (click)="createTheme()">Creer</button>
+</div>
