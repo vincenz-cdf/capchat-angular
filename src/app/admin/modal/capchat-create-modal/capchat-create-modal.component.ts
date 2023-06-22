@@ -2,6 +2,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppServiceService } from 'src/app/services/app-service.service';
 import * as JSZip from 'jszip';
+import Swal from 'sweetalert2';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-capchat-create-modal',
@@ -14,17 +16,20 @@ export class CapchatCreateModalComponent implements OnInit {
 
   closeResult = '';
   themes: any;
-  uploadedImages: { url: string, name: string, hint?: string }[] = [];
+  uploadedImages: { url: string, name: string, hint?: string, id?: any }[] = [];
 
   public creation = false;
   public imageSetData: any;
+
+  private api = "http://localhost:3000";
 
   @ViewChild('imagePreviewModal') imagePreviewModal: any;  // Reference to the image preview modal
 
   constructor(
     private modalService: NgbModal,
     private appService: AppServiceService,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private imageService: ImageService
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +42,10 @@ export class CapchatCreateModalComponent implements OnInit {
       "theme": this.creation ? null : this.params.imageSet.theme_id,
     }
     this.getThemes();
+
+    if (!this.creation) {
+      this.getImagesFromImagesSet();
+    }
   }
 
   open(content: any) {
@@ -64,7 +73,7 @@ export class CapchatCreateModalComponent implements OnInit {
   downloadImages() {
     let fileInput = <HTMLInputElement>document.getElementById('uploadBloc');
     fileInput.click();
-  
+
     if (fileInput != null) {
       fileInput.onchange = (event) => {
         for (let i = 0; i < fileInput.files!.length; i++) {
@@ -99,33 +108,57 @@ export class CapchatCreateModalComponent implements OnInit {
     this.uploadedImages.splice(i, 1)
   }
 
-  getImagesAsJson() {
+  async getImagesAsJson() {
     const formData = new FormData();
-    this.uploadedImages.forEach((image, index) => {
-      const byteCharacters = atob(image.url.split(',')[1]);
+    for (let index = 0; index < this.uploadedImages.length; index++) {
+      const image = this.uploadedImages[index];
+      let url: any = image.url;
+      if (!this.creation) {
+        url = await this.imageService.fetchImageAsBase64(image.url);
+      }
+      const byteCharacters = atob(url.split(',')[1]);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
       const byteArray = new Uint8Array(byteNumbers);
       const blob = new Blob([byteArray], { type: 'image/jpeg' });
+
       formData.append(`file${index}`, blob, image.name);
+      formData.append(`imageId${index}`, image.id);
       formData.append(`hint${index}`, image.hint ? image.hint : "");
-    });
+    }
     formData.append('set_name', this.imageSetData.name);
     formData.append('theme_id', this.imageSetData.theme);
     formData.append('user_id', this.params.user.id);
+    formData.append('image_sets_id', this.params.imageSet ? this.params.imageSet.id : null);
     this.appService.sendImagesToServer(formData).then(response => {
       this.activeModal.close()
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: "Jeu d'images enregistré",
+        showConfirmButton: false,
+        backdrop: false,
+        timer: 1500
+      })
     });
   }
 
+
   manageImages(creation: boolean) {
-    if(!creation && this.params.imageSet) { //Modification
-      this.appService.getImagesFromServer(this.params.imageSet.id).then((data) => {
-        console.log(data);
+    setTimeout(() => {
+      this.modalService.open(this.imagePreviewModal, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    }, 500);
+  }
+
+  getImagesFromImagesSet() {
+    this.appService.getImagesFromServer(this.params.imageSet.id).then((data) => {
+
+      data.forEach((d: any) => {
+        this.uploadedImages.push({ url: this.api + d.path, name: d.path.split('/').pop(), hint: d.hint, id: d.id });
       });
-    }
+    });
   }
 
   disableUploadImageButton() {

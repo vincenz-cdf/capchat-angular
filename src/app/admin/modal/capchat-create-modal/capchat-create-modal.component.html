@@ -47,15 +47,15 @@
       <div class="col-4">
         <img [src]="image.url" alt="Image Preview" class="mt-1" style="width: 35%; height: auto;">
       </div>
-      <div class="col-2 ml-n1">
+      <div class="col-3 ml-n1">
         <span>Nom</span><br>
         <input class="form-control form-control-sm" [(ngModel)]="uploadedImages[i].name">
       </div>
-      <div class="col-2 ml-n1">
+      <div class="col-3 ml-n1">
         <span>Question</span><br>
         <input class="form-control form-control-sm" [(ngModel)]="uploadedImages[i].hint">
       </div>
-      <div class="col-2">
+      <div class="col-1">
         <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeImage(i)">X</button>
       </div>
       <div class="mb-1">

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { CookieService } from 'ngx-cookie-service';
 import { CapchatCreateModalComponent } from '../admin/modal/capchat-create-modal/capchat-create-modal.component';
 
 @Injectable({
@@ -66,7 +65,7 @@ export class AppServiceService {
   
 
   getImagesFromServer(id: any): Promise<any> {
-    return this.http.get(this.api + 'imageset/' + id + '/image').toPromise();
+    return this.http.get(this.api + 'imageset/' + id + '/images').toPromise();
   }
 
   sendImagesToServer(data: any): Promise<any> {
