@@ -19,7 +19,7 @@
                     <i class="fa fa-cog text-light" style="cursor:pointer"></i>
                 </a>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <button ngbDropdownItem>Profile</button>
+                    <button ngbDropdownItem (click)="openCurrentUserCrud()">Profile</button>
                     <hr class="dropdown-divider">
                     <button ngbDropdownItem>Déconnexion</button>
                 </div>

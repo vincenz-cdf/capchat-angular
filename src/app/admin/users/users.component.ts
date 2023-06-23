@@ -45,7 +45,6 @@ export class UsersComponent implements OnInit {
   }
 
   openUserModal(user: any) {
-    console.log(user)
     this.userService.openUserModal(user).then(() => {
       this.loadData();
       Swal.fire({
