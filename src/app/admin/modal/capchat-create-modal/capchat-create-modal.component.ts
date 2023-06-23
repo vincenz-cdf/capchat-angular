@@ -143,7 +143,7 @@ export class CapchatCreateModalComponent implements OnInit {
         showConfirmButton: false,
         backdrop: false,
         timer: 1500
-      })
+      });
     });
   }
 

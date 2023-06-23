@@ -15,6 +15,9 @@ import { CapchatCreateModalComponent } from './admin/modal/capchat-create-modal/
 import { CookieService } from 'ngx-cookie-service';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { ThemeCreateModalComponent } from './admin/modal/theme-create-modal/theme-create-modal.component';
+import { UsersComponent } from './admin/users/users.component';
+import { HeaderComponent } from './admin/header/header.component';
+import { UserComponent } from './admin/modal/user/user.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -28,7 +31,10 @@ export function tokenGetter() {
     RegisterComponent,
     CapchatListComponent,
     CapchatCreateModalComponent,
-    ThemeCreateModalComponent
+    ThemeCreateModalComponent,
+    UsersComponent,
+    HeaderComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

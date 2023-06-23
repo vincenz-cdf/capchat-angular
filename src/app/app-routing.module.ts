@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CapchatListComponent } from './admin/capchat-list/capchat-list.component';
+import { UsersComponent } from './admin/users/users.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,11 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthGuard], // Use the AuthGuard here
     component: CapchatListComponent
+  },
+  {
+    path: 'users',
+    canActivate: [AuthGuard], // Use the AuthGuard here
+    component: UsersComponent
   },
 ];
 

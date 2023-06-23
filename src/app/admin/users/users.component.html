@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<div class="col-12 px-md-0 pe-xl-4">
+    <div class="card">
+        <div class="card-body">
+            <h4><i class="fa fa-palette"></i>Artistes</h4>
+        
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col-4">Nom d'utilisateur</th>
+                        <th scope="col-4">Email</th>
+                        <th scope="col-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>
+                            {{ user.username }}
+                        </td>
+                        <td>
+                            {{ user.email }}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-success ml-1" (click)="openUserModal(user)">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination
+                    [collectionSize]="collectionSize"
+                    [(page)]="page"
+                    [pageSize]="pageSize"
+                    (pageChange)="refreshCountries()"
+                >
+                </ngb-pagination>
+            
+                <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCountries()">
+                    <option [ngValue]="2">2 items per page</option>
+                    <option [ngValue]="4">4 items per page</option>
+                    <option [ngValue]="6">6 items per page</option>
+                </select>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>

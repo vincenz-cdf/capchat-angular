@@ -18,44 +18,7 @@
     </symbol>
 </svg>
 
-
-
-<header data-bs-theme="dark">
-    <div class="collapse text-bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-7 py-4">
-                    <h4>About</h4>
-                    <p class="text-body-secondary">Add some information about the album below, the author, or any other
-                        background context. Make it a few sentences long so folks can pick up some informative tidbits.
-                        Then, link them off to some social networking sites or contact information.</p>
-                </div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4>Contact</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
-                        <li><a href="#" class="text-white">Like on Facebook</a></li>
-                        <li><a href="#" class="text-white">Email me</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container">
-            <a href="#" class="navbar-brand d-flex align-items-center">
-                <img src="../../../assets/img/logo2.png" alt="image" width="20" height="20" fill="none" stroke="currentColor"
-                stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
-                viewBox="0 0 24 24">
-                <strong>Capchat</strong>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
-                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-</header>
+<app-header></app-header>
 
 <main>
 
@@ -63,9 +26,11 @@
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
                 <h1 class="fw-light">Jeux d'images</h1>
-                <p class="lead text-body-secondary">Une collection de jeux d'images, de leur contenu, de leurs créateurs.</p>
+                <p class="lead text-body-secondary">Une collection de jeux d'images, de leur contenu, de leurs
+                    créateurs.</p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <button type="button" class="btn btn-outline-primary btn-lg px-4 gap-3" (click)="crudModal()"><i class="fa fa-plus"></i> Capchat</button>
+                    <button type="button" class="btn btn-outline-primary btn-lg px-4 gap-3" (click)="crudModal()"><i
+                            class="fa fa-plus"></i> Capchat</button>
                 </div>
             </div>
         </div>
@@ -77,19 +42,22 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div *ngFor="let imageSet of imageSets" class="col">
                     <div class="card shadow-sm">
-                        <img src="http://localhost:3000{{imageSet.thumbnail}}" alt="Thumbnail" class="bd-placeholder-img card-img-top"
-                        width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail"
-                            preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <img src="http://localhost:3000{{imageSet.thumbnail}}" alt="Thumbnail"
+                            class="bd-placeholder-img card-img-top" width="100%" height="225" role="img"
+                            aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
 
                         <div class="card-body">
                             <p class="card-text">
-                                Capchat <strong>{{imageSet.name}}</strong> crée par <strong>{{imageSet.username}}</strong><br>
+                                Capchat <strong>{{imageSet.name}}</strong> crée par
+                                <strong>{{imageSet.username}}</strong><br>
                                 Theme : <strong>{{imageSet.theme}}</strong><br>
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button routerLink="/capchat/{{imageSet.id}}" type="button" class="btn btn-sm btn-outline-secondary">Tester</button>
-                                    <button (click)="crudModal(imageSet)" type="button" class="btn btn-sm btn-outline-secondary">Modifier</button>
+                                    <button routerLink="/capchat/{{imageSet.id}}" type="button"
+                                        class="btn btn-sm btn-outline-secondary">Tester</button>
+                                    <button (click)="crudModal(imageSet)" type="button"
+                                        class="btn btn-sm btn-outline-secondary">Modifier</button>
                                 </div>
                                 <small class="text-body-secondary"><strong>{{imageSet.count}}</strong> images</small>
                             </div>

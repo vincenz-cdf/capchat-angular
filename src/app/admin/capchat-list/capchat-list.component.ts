@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AppServiceService } from 'src/app/services/app-service.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-capchat-list',
@@ -12,7 +13,10 @@ export class CapchatListComponent implements OnInit {
   public imageSets: any;
   public user: any;
 
-  constructor(private appService: AppServiceService) { }
+  constructor(
+    private appService: AppServiceService,
+    private userService: UserService
+    ) { }
 
 
 
@@ -28,7 +32,7 @@ export class CapchatListComponent implements OnInit {
   }
 
   public getCurrentUser() {
-    this.appService.getCurrentUser().then((data) => {
+    this.userService.getCurrentUser().then((data) => {
       this.user = data;
     })
   }

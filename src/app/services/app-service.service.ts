@@ -88,11 +88,7 @@ export class AppServiceService {
   isAuthenticated(): Promise<any> {
     return this.http.get(this.api + 'isAuthenticated', { withCredentials: true }).toPromise();
   }
-
-  getCurrentUser(): Promise<any> {
-    return this.http.get(this.api + 'currentUser', { withCredentials: true }).toPromise();
-  }
-
+  
   createTheme(name: any): Promise<any> {
     return this.http.post(this.api + 'theme', {"name": name}).toPromise();
   }
