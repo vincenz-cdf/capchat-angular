@@ -31,10 +31,15 @@ export class UsersComponent implements OnInit {
   }
 
   loadData() {
-    this.userService.getUsers().then((data) => {
-      this.users = data;
-      this.collectionSize = data.length;
-    })
+    this.userService.getCurrentUser().then((user) => {
+      this.userService.getUsers(user.id).then((data) => {
+        this.users = data;
+        this.collectionSize = data.length;
+      })
+    });
+
+
+
   }
 
   refreshCountries() {

@@ -21,8 +21,8 @@ export class UserService {
     return this.http.get(this.api + 'currentUser', { withCredentials: true }).toPromise();
   }
 
-  getUsers(): Promise<any> {
-    return this.http.get(this.api + 'users').toPromise();
+  getUsers(id: any): Promise<any> {
+    return this.http.post(this.api + 'users', {"id": id}).toPromise();
   }
 
   updateUser(id: any, data: any): Promise<any> {
