@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AppServiceService } from 'src/app/services/app-service.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-capchat-list',
@@ -51,6 +51,28 @@ export class CapchatListComponent implements OnInit {
   public changeRegroupSetting(filter: any) {
     this.regroupSetting = filter;
     this.initializeCapchatList(filter);
+  }
+
+  public deleteImageSet(id: any) {
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: "Vous ne pourrez pas revenir en arrière!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Supprimer!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appService.deleteImageSet(id);
+        Swal.fire(
+          'Supprimé!',
+          "Le jeu d'image a été supprimé.",
+          'success'
+        )
+        this.initializeCapchatList('name');
+      }
+    })
   }
 
 }

@@ -67,6 +67,8 @@
                                         class="btn btn-sm btn-outline-info"><i class="fa fa-eye"></i></button>
                                     <button (click)="crudModal(imageSet)" type="button"
                                         class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i></button>
+                                    <button (click)="deleteImageSet(imageSet.id)" type="button"
+                                        class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
                                 </div>
                                 <div *ngIf="regroupSetting=='category'">
                                     <button type="button" (click)="crudModal(imageSet)"

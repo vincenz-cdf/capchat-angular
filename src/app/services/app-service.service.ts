@@ -90,6 +90,10 @@ export class AppServiceService {
     return this.http.post(this.api + 'imageset', data).toPromise();
   }
 
+  deleteImageSet(id: any): Promise<any> {
+    return this.http.delete(this.api + 'imageset/' + id).toPromise();
+  }
+
   isAuthenticated(): Promise<any> {
     return this.http.get(this.api + 'isAuthenticated', { withCredentials: true }).toPromise();
   }
