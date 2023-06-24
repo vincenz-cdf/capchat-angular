@@ -33,20 +33,28 @@ export class CapchatCreateModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (!this.params.imageSet) {
-      this.creation = true;
+
+    if(this.params.filter == 'category') {
+      this.getImagesFromThemeId();
+      this.manageImages();
+    } else {
+      if (!this.params.imageSet) {
+        this.creation = true;
+      }
+  
+      this.imageSetData = {
+        "name": this.creation ? '' : this.params.imageSet.name,
+        "theme": this.creation ? null : this.params.imageSet.theme_id,
+        "destination_url": this.creation ? '' : this.params.imageSet.destination_url,
+      }
+      this.getThemes();
+  
+      if (!this.creation) {
+        this.getImagesFromImagesSet();
+      }
     }
 
-    this.imageSetData = {
-      "name": this.creation ? '' : this.params.imageSet.name,
-      "theme": this.creation ? null : this.params.imageSet.theme_id,
-      "destination_url": this.creation ? '' : this.params.imageSet.destination_url,
-    }
-    this.getThemes();
 
-    if (!this.creation) {
-      this.getImagesFromImagesSet();
-    }
   }
 
   open(content: any) {
@@ -148,7 +156,7 @@ export class CapchatCreateModalComponent implements OnInit {
   }
 
 
-  manageImages(creation: boolean) {
+  manageImages() {
     setTimeout(() => {
       this.modalService.open(this.imagePreviewModal, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
     }, 500);
@@ -156,6 +164,16 @@ export class CapchatCreateModalComponent implements OnInit {
 
   getImagesFromImagesSet() {
     this.appService.getImagesFromServer(this.params.imageSet.id).then((data) => {
+
+      data.forEach((d: any) => {
+        this.uploadedImages.push({ url: this.api + d.path, name: d.path.split('/').pop(), hint: d.hint, id: d.id });
+      });
+    });
+  }
+
+  getImagesFromThemeId() {
+    console.log(this.params.imageSet.theme_id)
+    this.appService.getImagesFromServerByTheme(this.params.imageSet.theme_id).then((data) => {
 
       data.forEach((d: any) => {
         this.uploadedImages.push({ url: this.api + d.path, name: d.path.split('/').pop(), hint: d.hint, id: d.id });
@@ -176,6 +194,7 @@ export class CapchatCreateModalComponent implements OnInit {
   cancelUploadedImages(modal: any) {
     this.uploadedImages = [];
     modal.close();
+    this.activeModal.close('filter');
   }
 
   public themeModal() {

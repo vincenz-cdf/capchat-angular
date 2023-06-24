@@ -38,8 +38,15 @@
 
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
-
+            <div class="btn-group mb-3">
+                Regrouper par&nbsp;
+                <button type="button" (click)="changeRegroupSetting('name')"
+                    [ngClass]="regroupSetting == 'name' ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-outline-secondary'">Nom</button>
+                <button (click)="changeRegroupSetting('category')" type="button"
+                    [ngClass]="regroupSetting == 'category' ? 'btn btn-sm btn-secondary' : 'btn btn-sm btn-outline-secondary'">Thème</button>
+            </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
                 <div *ngFor="let imageSet of imageSets" class="col">
                     <div class="card shadow-sm">
                         <img src="http://localhost:3000{{imageSet.thumbnail}}" alt="Thumbnail"
@@ -48,18 +55,27 @@
 
                         <div class="card-body">
                             <p class="card-text">
-                                Capchat <strong>{{imageSet.name}}</strong> crée par
-                                <strong>{{imageSet.username}}</strong><br>
+                                <span *ngIf="regroupSetting == 'name'">
+                                    Capchat <strong>{{imageSet.name}}</strong> crée par
+                                    <strong>{{imageSet.username}}</strong><br>
+                                </span>
                                 Theme : <strong>{{imageSet.theme}}</strong><br>
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
+                                <div *ngIf="regroupSetting=='name'">
                                     <button routerLink="/capchat/{{imageSet.id}}" type="button"
-                                        class="btn btn-sm btn-outline-secondary">Tester</button>
+                                        class="btn btn-sm btn-outline-info"><i class="fa fa-eye"></i></button>
                                     <button (click)="crudModal(imageSet)" type="button"
-                                        class="btn btn-sm btn-outline-secondary">Modifier</button>
+                                        class="btn btn-sm btn-outline-success"><i class="fa fa-edit"></i></button>
                                 </div>
-                                <small class="text-body-secondary"><strong>{{imageSet.count}}</strong> images</small>
+                                <div *ngIf="regroupSetting=='category'">
+                                    <button type="button" (click)="crudModal(imageSet)"
+                                        class="btn btn-sm btn-outline-info">&nbsp;<i class="fa fa-info"></i>&nbsp;</button>
+                                </div>
+
+                                <small class="text-body-secondary"><span
+                                        *ngIf="regroupSetting == 'category'"><strong>{{imageSet.image_sets_count}}</strong>
+                                        jeux pour </span><strong>{{imageSet.count}}</strong> images</small>
                             </div>
                         </div>
                     </div>
@@ -69,16 +85,3 @@
     </div>
 
 </main>
-
-<!--
-<footer class="text-body-secondary py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                href="../getting-started/introduction/">getting started guide</a>.</p>
-    </div>
-</footer>
--->

@@ -39,22 +39,23 @@ export class AppServiceService {
     return this.http.post(this.api + 'register', crendentials).toPromise();
   }
 
-  initializeCapchatList(): Promise<any> {
-    return this.http.get(this.api + 'capchats', { withCredentials: true }).toPromise();
+  initializeCapchatList(filter: any): Promise<any> {
+    return this.http.get(this.api + 'capchats/' + filter, { withCredentials: true }).toPromise();
   }
 
   initializeThemes(): Promise<any> {
     return this.http.get(this.api + 'themes').toPromise();
   }
 
-  openCrudModal(imageSet: any, user: any): Promise<any> {
+  openCrudModal(imageSet: any, user: any, filter: any): Promise<any> {
     this.config.backdrop = 'static';
     this.config.keyboard = false;
     return new Promise((resolve, reject) => {
       const dlg = this.modalService.open(CapchatCreateModalComponent, this.config);
       dlg.componentInstance.params = {
         imageSet,
-        user
+        user,
+        filter
       };
       dlg.result.then((result) => {
         resolve(result);
@@ -79,6 +80,10 @@ export class AppServiceService {
 
   getImagesFromServer(id: any): Promise<any> {
     return this.http.get(this.api + 'imageset/' + id + '/images').toPromise();
+  }
+
+  getImagesFromServerByTheme(themeId: any): Promise<any> {
+    return this.http.get(this.api + 'imageset/theme/' + themeId + '/images').toPromise();
   }
 
   sendImagesToServer(data: any): Promise<any> {

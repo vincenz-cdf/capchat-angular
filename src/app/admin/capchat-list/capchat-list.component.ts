@@ -12,6 +12,7 @@ export class CapchatListComponent implements OnInit {
 
   public imageSets: any;
   public user: any;
+  public regroupSetting: any = 'name';
 
   constructor(
     private appService: AppServiceService,
@@ -21,12 +22,13 @@ export class CapchatListComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.regroupSetting = 'name';
     this.getCurrentUser();
-    this.initializeCapchatList();
+    this.initializeCapchatList('name');
   }
 
-  public initializeCapchatList() {
-    this.appService.initializeCapchatList().then((data) => {
+  public initializeCapchatList(filter: any) {
+    this.appService.initializeCapchatList(filter).then((data) => {
       this.imageSets = data;
     })
   }
@@ -38,9 +40,17 @@ export class CapchatListComponent implements OnInit {
   }
 
   public crudModal(imageSet?: any) {
-    this.appService.openCrudModal(imageSet, this.user).then(() => {
-      this.initializeCapchatList();
+    this.appService.openCrudModal(imageSet, this.user, this.regroupSetting).then((reason) => {
+      if(reason != 'filter') {
+        this.initializeCapchatList(this.regroupSetting);
+      }
+      
     });
+  }
+
+  public changeRegroupSetting(filter: any) {
+    this.regroupSetting = filter;
+    this.initializeCapchatList(filter);
   }
 
 }
