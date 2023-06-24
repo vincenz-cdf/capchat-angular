@@ -14,7 +14,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of users">
+                    <tr *ngFor="let user of paginatedUsers">
                         <td>
                             {{ user.username }}
                         </td>
@@ -36,14 +36,14 @@
                     [collectionSize]="collectionSize"
                     [(page)]="page"
                     [pageSize]="pageSize"
-                    (pageChange)="refreshCountries()"
+                    (pageChange)="refreshUsers()"
                 >
                 </ngb-pagination>
             
-                <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCountries()">
-                    <option [ngValue]="2">2 items per page</option>
-                    <option [ngValue]="4">4 items per page</option>
-                    <option [ngValue]="6">6 items per page</option>
+                <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshUsers()">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="20">20</option>
                 </select>
             </div>
             

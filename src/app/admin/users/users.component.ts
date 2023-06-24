@@ -17,9 +17,10 @@ interface User {
 export class UsersComponent implements OnInit {
 
   page = 1;
-  pageSize = 4;
+  pageSize = 5;
   collectionSize: any;
   users: User[];
+  paginatedUsers: User[];
 
   constructor(
     private appService: AppServiceService,
@@ -35,15 +36,14 @@ export class UsersComponent implements OnInit {
       this.userService.getUsers(user.id).then((data) => {
         this.users = data;
         this.collectionSize = data.length;
+        this.refreshUsers();
       })
     });
 
-
-
   }
 
-  refreshCountries() {
-    this.users = this.users.map((user, i) => ({ id: i + 1, ...user })).slice(
+  refreshUsers() {
+    this.paginatedUsers = this.users.slice(
       (this.page - 1) * this.pageSize,
       (this.page - 1) * this.pageSize + this.pageSize,
     );
