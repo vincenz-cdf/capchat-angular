@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AppServiceService } from '../services/app-service.service';
 import { ActivatedRoute  } from '@angular/router';
+import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-capchat',
   templateUrl: './capchat.component.html',
   styleUrls: ['./capchat.component.scss']
 })
-export class CapchatComponent implements OnInit {
+export class CapchatComponent implements OnInit, OnDestroy {
   hint = '';
   images: any;
   timeLeft = 30;
@@ -82,5 +83,9 @@ export class CapchatComponent implements OnInit {
 
   getProgressBarWidth() {
     return (this.timeLeft * 100) / this.duration;
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.downloadTimer);
   }
 }

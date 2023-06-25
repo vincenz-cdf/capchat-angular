@@ -15,16 +15,21 @@
 
 
             <div ngbDropdown class="d-inline-block">
-                <a class="d-block link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false" id="dropdownBasic1" ngbDropdownToggle style="cursor:pointer">
-                    <i class="fa fa-cog text-light" style="cursor:pointer"></i>
+                <a class="d-block link-light text-decoration-none dropdown-toggle" 
+                   data-bs-toggle="dropdown" 
+                   aria-expanded="false" 
+                   id="dropdownBasic1" 
+                   ngbDropdownToggle 
+                   style="cursor:pointer">
+                    <i class="fa fa-cog text-light cog-icon" style="cursor:pointer;"></i>
                 </a>
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <button ngbDropdownItem (click)="openCurrentUserCrud()">Profile</button>
+                    <button ngbDropdownItem (click)="openCurrentUserCrud()">Profil</button>
                     <hr class="dropdown-divider">
                     <button ngbDropdownItem (click)="logout()">Déconnexion</button>
                 </div>
             </div>
+            
         </div>
     </div>
 </header>

@@ -83,7 +83,7 @@
 
   </div>
   <div class="modal-footer">
-    <div *ngIf="this.uploadedImages.length < 8 || disableUploadImageButton()" class="alert alert-warning mr-auto"
+    <div *ngIf="params.filter == 'name' && (this.uploadedImages.length < 8 || disableUploadImageButton())" class="alert alert-warning mr-auto"
       role="alert">
       Il faut au moins 8 images et une question
     </div>

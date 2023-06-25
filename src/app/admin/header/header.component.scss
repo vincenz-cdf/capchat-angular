@@ -14,3 +14,20 @@
     outline: 0;
   }
   
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+  
+  .rotate {
+    animation: rotation 2s infinite linear;
+  }
+
+  a:hover .cog-icon {
+    transition: transform 0.3s ease-in-out;
+    transform: rotate(45deg);
+}
