@@ -9,7 +9,8 @@
     <form>
       <div class="form-group mb-2">
         <label>Nom du jeu d'images</label>
-        <input [(ngModel)]="imageSetData.name" class="form-control" [ngModelOptions]="{standalone: true}">
+        <input [(ngModel)]="imageSetData.name" class="form-control" [ngModelOptions]="{standalone: true}"
+        placeholder="Nom">
       </div>
       <div class="form-group mb-2">
         <div class="row">
@@ -20,14 +21,15 @@
             </select>
           </div>
           <div class="col-2 mt-4">
-            <button type="button" class="btn btn-outline-success"><i class="fa fa-plus"
+            <button type="button" class="btn btn-sm btn-outline-success mt-1"><i class="fa fa-plus"
                 (click)="themeModal()"></i></button>
           </div>
         </div>
       </div>
       <div class="form-group mb-2">
         <label>Url destination</label>
-        <input [(ngModel)]="imageSetData.destination_url" class="form-control" [ngModelOptions]="{standalone: true}">
+        <input [(ngModel)]="imageSetData.destination_url" class="form-control" [ngModelOptions]="{standalone: true}"
+        placeholder="https://www.google.fr/">
       </div>
       <div class="form-group">
         <div *ngIf="this.creation && this.uploadedImages.length==0" class="mt-2">

@@ -44,7 +44,7 @@ export class CapchatCreateModalComponent implements OnInit {
   
       this.imageSetData = {
         "name": this.creation ? '' : this.params.imageSet.name,
-        "theme": this.creation ? null : this.params.imageSet.theme_id,
+        "theme": this.creation ? 1 : this.params.imageSet.theme_id,
         "destination_url": this.creation ? '' : this.params.imageSet.destination_url,
       }
       this.getThemes();
@@ -53,7 +53,6 @@ export class CapchatCreateModalComponent implements OnInit {
         this.getImagesFromImagesSet();
       }
     }
-
 
   }
 
@@ -201,8 +200,9 @@ export class CapchatCreateModalComponent implements OnInit {
   }
 
   public themeModal() {
-    this.appService.openThemeModal().then(() => {
+    this.appService.openThemeModal().then((data) => {
       this.getThemes();
+      this.imageSetData.theme = data.themeId;
     });
   }
 

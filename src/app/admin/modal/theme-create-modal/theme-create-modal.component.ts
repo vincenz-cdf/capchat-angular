@@ -23,7 +23,7 @@ export class ThemeCreateModalComponent implements OnInit {
 
   createTheme() {
     this.appService.createTheme(this.themeName).then((data) => {
-      this.activeModal.close();
+      this.activeModal.close(data);
     });
 
   }
