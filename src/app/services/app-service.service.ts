@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -32,7 +32,12 @@ export class AppServiceService {
   }
 
   signIn(credentials: any): Promise<any> {
-    return this.http.post(this.api + 'login', credentials, { withCredentials: true }).toPromise();
+    return this.http.post(this.api + 'login', credentials).toPromise();
+  }
+
+  isAuthenticated(): Promise<any> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('authToken'));
+    return this.http.get(this.api + 'isAuthenticated', { headers }).toPromise();
   }
 
   signUp(crendentials: any): Promise<any> {
@@ -64,7 +69,7 @@ export class AppServiceService {
       });
     });
   }
-  
+
   openThemeModal(): Promise<any> {
     this.config.backdrop = 'static';
     this.config.keyboard = false;
@@ -94,11 +99,7 @@ export class AppServiceService {
     return this.http.delete(this.api + 'imageset/' + id).toPromise();
   }
 
-  isAuthenticated(): Promise<any> {
-    return this.http.get(this.api + 'isAuthenticated', { withCredentials: true }).toPromise();
-  }
-  
   createTheme(name: any): Promise<any> {
-    return this.http.post(this.api + 'theme', {"name": name}).toPromise();
+    return this.http.post(this.api + 'theme', { "name": name }).toPromise();
   }
 }

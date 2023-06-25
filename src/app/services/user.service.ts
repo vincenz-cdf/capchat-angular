@@ -45,7 +45,7 @@ export class UserService {
     });
   }
 
-  logout(): Promise<any> {
-    return this.http.post(this.api + 'logout', {}).toPromise();
+  logout(): void {
+    localStorage.removeItem('authToken');
   }
 }

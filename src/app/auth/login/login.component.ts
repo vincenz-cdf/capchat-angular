@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         }
       })
       .catch(error => console.error('Error:', error));
-  }
+}
   
 
 }

@@ -25,16 +25,14 @@ export class HeaderComponent implements OnInit {
   openCurrentUserCrud() {
     this.userService.getCurrentUser().then((user) => {
       this.userService.openUserModal(user).then(() => {
-        this.userService.logout().then(() => {
-          this.router.navigate(['/login']);
-        })
+        this.userService.logout();
+        this.router.navigate(['/login']);
       });
     });
   }
 
   logout() {
-    this.userService.logout().then(() => {
-      this.router.navigate(['/login']);
-    })
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 }
