@@ -194,7 +194,10 @@ export class CapchatCreateModalComponent implements OnInit {
   cancelUploadedImages(modal: any) {
     this.uploadedImages = [];
     modal.close();
-    this.activeModal.close('filter');
+    if(this.params.filter == 'category') {
+      this.activeModal.close('filter');
+    }
+    
   }
 
   public themeModal() {

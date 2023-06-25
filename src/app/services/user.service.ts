@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { UserComponent } from '../admin/modal/user/user.component';
@@ -17,8 +17,11 @@ export class UserService {
 
 
 
-  getCurrentUser(): Promise<any> {
-    return this.http.get(this.api + 'currentUser', { withCredentials: true }).toPromise();
+  getCurrentUser() {
+    let token = localStorage.getItem('authToken'); // get the token from localStorage
+    let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // set the token in the header
+
+    return this.http.get<any>('http://localhost:3000/currentUser', { headers }).toPromise();
   }
 
   getUsers(id: any): Promise<any> {
