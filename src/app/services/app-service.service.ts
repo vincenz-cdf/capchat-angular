@@ -9,7 +9,7 @@ import { ThemeCreateModalComponent } from '../admin/modal/theme-create-modal/the
   providedIn: 'root'
 })
 export class AppServiceService {
-  private api = "http://localhost:3000/";
+  private api = "https://node-capchat-production.up.railway.app/";
 
 
   constructor(
