@@ -7,7 +7,7 @@ import { UserComponent } from '../admin/modal/user/user.component';
   providedIn: 'root'
 })
 export class UserService {
-  private api = "http://localhost:3000/";
+  private api = "https://node-capchat-production.up.railway.app/";
 
   constructor(
     private http: HttpClient,
@@ -21,7 +21,7 @@ export class UserService {
     let token = localStorage.getItem('authToken'); // get the token from localStorage
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`); // set the token in the header
 
-    return this.http.get<any>('http://localhost:3000/currentUser', { headers }).toPromise();
+    return this.http.get<any>('https://node-capchat-production.up.railway.app/currentUser', { headers }).toPromise();
   }
 
   getUsers(id: any): Promise<any> {

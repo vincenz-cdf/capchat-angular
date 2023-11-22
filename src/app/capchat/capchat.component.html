@@ -9,7 +9,7 @@
 
                 <div id="imageContainer" style="display: flex; flex-wrap: wrap;">
                     <div *ngFor="let image of images" class="imageDisplay" (click)="imageClickHandler(image)" style="flex: 1 1 35%; padding: 10px;" [ngClass]="{'selected': image.selected}">
-                        <img src="http://localhost:3000{{image.path}}" alt="Image ID {{image.id}}" style="width: 100%; height: auto;"
+                        <img src="https://node-capchat-production.up.railway.app{{image.path}}" alt="Image ID {{image.id}}" style="width: 100%; height: auto;"
                              [attr.data-id]="image.id">
                     </div>
                 </div>

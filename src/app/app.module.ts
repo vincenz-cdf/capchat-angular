@@ -50,7 +50,7 @@ export function tokenGetter() {
       provide: JWT_OPTIONS,
       useValue: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["http://localhost:3000"],
+        allowedDomains: ["https://node-capchat-production.up.railway.app"],
         disallowedRoutes: ["http://example.com/api/auth"],
       }
     },

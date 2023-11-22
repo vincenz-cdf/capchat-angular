@@ -21,7 +21,7 @@ export class CapchatCreateModalComponent implements OnInit {
   public creation = false;
   public imageSetData: any;
 
-  private api = "http://localhost:3000";
+  private api = "https://node-capchat-production.up.railway.app";
 
   @ViewChild('imagePreviewModal') imagePreviewModal: any;  // Reference to the image preview modal
 
